@@ -1,9 +1,8 @@
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import kotlin.concurrent.thread
 
 class AppState {
-    val state: MutableState<UiState> = mutableStateOf(UiState())
+    val state = mutableStateOf(UiState())
 
     fun loadNotes() {
         thread {
