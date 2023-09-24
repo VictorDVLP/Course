@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import org.jetbrains.skia.impl.Log
 
 @Composable
 private fun notesList(notes: List<Notes>) {
@@ -69,7 +68,6 @@ fun App(appState: AppState) {
             appState.loadNotes()
         }
     }
-    Log.info(s = "El valor de notes es $newNotes")
     MaterialTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
