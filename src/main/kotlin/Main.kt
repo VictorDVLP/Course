@@ -59,32 +59,33 @@ private fun notesList(notes: List<Notes>) {
 
 @Composable
 @Preview
-fun App(appState: AppState) {
+fun App() {
+    with(AppState.state.value) {
 
-    val newNotes= appState.state.value.notes
+        val newNotes: List<Notes>? = this.notes
 
-    if (newNotes == null) {
-        LaunchedEffect(true) {
-            appState.loadNotes()
+        if (newNotes == null) {
+            LaunchedEffect(true) {
+                AppState.loadNotes()
+            }
         }
-    }
-    MaterialTheme {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            if (appState.state.value.loading) CircularProgressIndicator()
-             if (newNotes != null) notesList(newNotes)
+        MaterialTheme {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                if (this@with.loading) CircularProgressIndicator()
+                newNotes?.let { notesList(it) } ?: emptyList<Notes>()
+            }
         }
     }
 }
 
-fun main() {
-    val state = AppState()
 
+fun main() {
     application {
         Window(onCloseRequest = ::exitApplication) {
-            App(state)
+            App()
         }
     }
 }
