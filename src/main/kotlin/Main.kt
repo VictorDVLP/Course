@@ -60,7 +60,7 @@ private fun notesList(notes: List<Notes>) {
 @Composable
 @Preview
 fun App() {
-    with(AppState.state.value) {
+    with(AppState.state) {
 
         val newNotes: List<Notes>? = this.notes
 
