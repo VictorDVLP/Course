@@ -1,17 +1,18 @@
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import kotlin.concurrent.thread
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 object AppState {
-    var state by mutableStateOf(UiState())
+    private val _state = MutableStateFlow(UiState())
+    val state = _state.asStateFlow()
 
-    fun loadNotes() {
-        thread {
-            state = UiState(loading = true)
-            getNotes {
-                state = UiState(notes = it, loading = false)
-            }
+
+    fun loadNotes(coroutineScope: CoroutineScope) {
+        coroutineScope.launch {
+            _state.value = UiState(loading = true)
+            getNotes().collect {
+                _state.value = UiState(notes = it, loading = false)}
         }
     }
 }
