@@ -31,7 +31,7 @@ fun App() {
                 Box(
                     modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center
                 ) {
-                    if (data.AppState.state.value.loading) CircularProgressIndicator()
+                    if (AppState.state.value.loading) CircularProgressIndicator()
                     newNotes?.let { notesList(it) } ?: emptyList<Notes>()
                 }
             }
