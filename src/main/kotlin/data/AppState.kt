@@ -1,3 +1,5 @@
+package data
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,7 +14,8 @@ object AppState {
         coroutineScope.launch {
             _state.value = UiState(loading = true)
             getNotes().collect {
-                _state.value = UiState(notes = it, loading = false)}
+                _state.value = UiState(notes = it, loading = false)
+            }
         }
     }
 }
