@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import data.AppState
+import data.AppState.filterNotes
 import data.Notes
 import data.TypeNotes
 
@@ -20,26 +21,26 @@ import data.TypeNotes
 fun App() {
     with(AppState.state.collectAsState()) {
 
-        val newNotes: List<Notes>? = this.value.notes
-
         LaunchedEffect(true) {
             AppState.loadNotes(this)
 
         }
         MaterialTheme {
-            Scaffold(topBar = { Toolbar() }) { padding ->
+            Scaffold(
+                topBar = { Toolbar(onFilterClick = ::filterNotes) },
+            ) { padding ->
                 Box(
                     modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center
                 ) {
                     if (AppState.state.value.loading) CircularProgressIndicator()
-                    newNotes?.let { notesList(it) } ?: emptyList<Notes>()
+                    this@with.value.filteredNotes?.let {
+                        notesList(it) }
                 }
             }
         }
 
     }
 }
-
 
 @Composable
 private fun notesList(notes: List<Notes>) {

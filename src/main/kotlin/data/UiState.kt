@@ -1,8 +1,12 @@
 package data
 
-import data.Notes
-
 data class UiState(
-    var notes: List<Notes>? = null,
-    var loading: Boolean = false
-)
+    val notes: List<Notes>? = null,
+    val loading: Boolean = false,
+    val filter: Filter = Filter.NotesAll
+) {
+    val filteredNotes get() = when (filter) {
+        is Filter.NotesAll -> notes
+        is Filter.NotesFilter -> notes?.filter { it.type == filter.type }
+    }
+}

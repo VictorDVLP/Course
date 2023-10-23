@@ -4,38 +4,58 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import data.*
 
 @Composable
-fun Toolbar() {
+fun Toolbar(onFilterClick: (Filter) -> Unit) {
+
     TopAppBar(
         title = { Text(text = "My notes") },
-        actions = {
-            FilterIcons()
-        }
-    )
+        actions = { FilterIcons(onFilterClick = onFilterClick)
+    })
 }
 
 @Composable
-private fun FilterIcons() {
-    var expanded by remember { mutableStateOf(false) }
+private fun FilterIcons(onFilterClick: (Filter) -> Unit) {
 
-    IconButton(onClick = { expanded = true }) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+
+    IconButton(
+        onClick = { expanded = true }
+    ) {
         Icon(
-            imageVector = Icons.Default.FilterList,
-            contentDescription = "Filter Notes"
+            imageVector = Icons.Default.FilterList, contentDescription = "Filter Notes"
         )
         DropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }) {
-            DropdownMenuItem(onClick = { expanded = false }) {
-                Text(text = "All")
+            onDismissRequest = { expanded = false }
+        ) {
+
+            @Composable
+            infix fun Filter.ToMenuItem(text: String) = DropdownMenuItem(onClick = {
+                expanded = false
+                onFilterClick(this)
+            }) {
+                Text(text = text)
             }
-            DropdownMenuItem(onClick = { expanded = false }) {
-                Text(text = "Audio")
-            }
-            DropdownMenuItem(onClick = { expanded = false }) {
-                Text(text = "Text")
-            }
+
+            Filter.NotesAll ToMenuItem "All"
+            Filter.NotesFilter(type = TypeNotes.AUDIO_NOTE) ToMenuItem "Audio"
+            Filter.NotesFilter(type = TypeNotes.WRITTEN_NOTE) ToMenuItem "Text"
+
+         //   listOf(
+         //       (Filter.NotesAll to "All"),
+         //       (Filter.NotesFilter(type = TypeNotes.AUDIO_NOTE) to "Audio"),
+         //       (Filter.NotesFilter(type = TypeNotes.WRITTEN_NOTE) to "Text")
+         //   ).forEach { (filter, text) ->
+         //       DropdownMenuItem(onClick = {
+         //           expanded = false
+         //           onFilterClick(filter)
+         //       }) {
+         //           Text(text = text)
+         //       }
+         //   }
         }
     }
 }

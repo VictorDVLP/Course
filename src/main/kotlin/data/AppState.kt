@@ -3,12 +3,12 @@ package data
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 object AppState {
     private val _state = MutableStateFlow(UiState())
     val state = _state.asStateFlow()
-
 
     fun loadNotes(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
@@ -18,6 +18,15 @@ object AppState {
             }
         }
     }
+
+    fun filterNotes(filter: Filter) {
+        _state.update {
+            it.copy(
+                filter = filter
+            )
+        }
+    }
 }
+
 
 
