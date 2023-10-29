@@ -7,8 +7,14 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 object AppState {
+
     private val _state = MutableStateFlow(UiState())
     val state = _state.asStateFlow()
+
+    // Custom delegate usage example
+
+    //  var state by MutableStateFlow { UiState() }
+    //      private set
 
     fun loadNotes(coroutineScope: CoroutineScope) {
         coroutineScope.launch {
@@ -18,6 +24,7 @@ object AppState {
             }
         }
     }
+
 
     fun filterNotes(filter: Filter) {
         _state.update {
