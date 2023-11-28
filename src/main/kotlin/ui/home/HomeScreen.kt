@@ -1,55 +1,62 @@
-package ui
+package ui.home
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Mic
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import data.AppState
-import data.AppState.filterNotes
+import viewmodel.HomeViewModel
 import data.Notes
 import data.TypeNotes
 
 @Composable
-@Preview
-fun App() {
-    with(AppState.state.collectAsState()) {
+fun HomeScreen(viewModel: HomeViewModel, onNoteClick: (noteId: Long) -> Unit) {
 
-        LaunchedEffect(true) {
-            AppState.loadNotes(this)
+    MaterialTheme {
+        Scaffold(
+            topBar = { HomeToolbar(onFilterClick = viewModel::filterNotes) },
+            floatingActionButton = {
+                FloatingActionButton(onClick = { onNoteClick(Notes.NEW_NOTE) }) {
+                    Icon(
+                        imageVector = Icons.Default.Add, contentDescription = "Add Note"
+                    )
+                }
+            }
+        ) { padding ->
+            Box(
+                modifier = Modifier.fillMaxSize().padding(padding)
+            ) {
+                if (viewModel.state.loading) {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
 
-        }
-        MaterialTheme {
-            Scaffold(
-                topBar = { Toolbar(onFilterClick = ::filterNotes) },
-            ) { padding ->
-                Box(
-                    modifier = Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center
-                ) {
-                    if (AppState.state.value.loading) CircularProgressIndicator()
-                    this@with.value.filteredNotes?.let {
-                        notesList(it) }
+                viewModel.state.filteredNotes?.let { listNotes ->
+                    notesList(notes = listNotes, onNoteClick = { onNoteClick(it.id) })
                 }
             }
         }
-
     }
+
 }
 
+
 @Composable
-private fun notesList(notes: List<Notes>) {
+private fun notesList(notes: List<Notes>, onNoteClick: (Notes) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(notes) {
             Card(
-                modifier = Modifier.padding(8.dp).fillMaxWidth(0.8f)
+                modifier = Modifier.padding(8.dp).fillMaxWidth(0.8f).clickable { onNoteClick(it) }
             ) {
                 Column(
                     modifier = Modifier.padding(16.dp)

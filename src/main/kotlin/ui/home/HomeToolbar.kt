@@ -1,4 +1,4 @@
-package ui
+package ui.home
 
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -8,7 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import data.*
 
 @Composable
-fun Toolbar(onFilterClick: (Filter) -> Unit) {
+fun HomeToolbar(onFilterClick: (Filter) -> Unit) {
 
     TopAppBar(
         title = { Text(text = "My notes") },
