@@ -6,12 +6,13 @@ import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import data.*
+import getAppTitle
 
 @Composable
 fun HomeToolbar(onFilterClick: (Filter) -> Unit) {
 
     TopAppBar(
-        title = { Text(text = "My notes") },
+        title = { Text(text = getAppTitle()) },
         actions = { FilterIcons(onFilterClick = onFilterClick)
     })
 }
