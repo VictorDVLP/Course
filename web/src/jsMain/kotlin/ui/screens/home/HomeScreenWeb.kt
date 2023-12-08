@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import data.Notes
 import org.jetbrains.compose.web.css.*
 import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.Text
 import ui.common.Icon
 import ui.theme.AppStyleSheet
 import viewmodel.HomeViewModel

@@ -4,8 +4,6 @@ import androidx.compose.runtime.Composable
 import data.Notes
 import data.TypeAction
 import data.TypeAction.*
-import org.jetbrains.compose.web.attributes.InputType
-import org.jetbrains.compose.web.dom.Button
 import org.jetbrains.compose.web.dom.Div
 import org.jetbrains.compose.web.dom.H1
 import org.jetbrains.compose.web.dom.Text

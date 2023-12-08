@@ -1,12 +1,8 @@
 package ui.screens.detail
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import data.TypeAction
-import data.TypeAction.*
+import data.TypeAction.CLOSE
 import data.TypeNotes
 import org.jetbrains.compose.web.attributes.placeholder
 import org.jetbrains.compose.web.attributes.selected
