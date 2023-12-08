@@ -14,7 +14,7 @@ import data.TypeAction.*
 import viewmodel.DetailViewModel
 
 @Composable
-fun detailToolbar(viewModel: DetailViewModel) {
+fun detailTopbar(viewModel: DetailViewModel) {
 
     val note = viewModel.stateNote.note
 

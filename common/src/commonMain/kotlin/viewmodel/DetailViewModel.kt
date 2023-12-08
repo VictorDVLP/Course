@@ -41,7 +41,7 @@ class DetailViewModel(private val scope: CoroutineScope, private val noteId: Lon
         }
     }
 
-    fun updateNote( note: Notes ) {
+    fun updateNote( note: Notes) {
         stateNote = stateNote.copy(note = note)
     }
 

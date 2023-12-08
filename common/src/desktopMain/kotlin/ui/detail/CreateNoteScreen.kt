@@ -22,7 +22,7 @@ fun detailScreen(viewModel: DetailViewModel, onAction: (TypeAction) -> Unit) {
     val note = viewModel.stateNote.note
 
     Scaffold(
-        topBar = { detailToolbar(viewModel = viewModel) }
+        topBar = { detailTopbar(viewModel = viewModel) }
     ) {
         if (viewModel.stateNote.saved) {
             onAction(CLOSE)
