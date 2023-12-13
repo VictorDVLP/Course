@@ -3,15 +3,14 @@ package viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import data.Filter
 import data.UiState
 import data.remote.NotesRepository
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class HomeViewModel( private val scope: CoroutineScope) {
+class HomeViewModel: ScreenModel {
 
     var state by mutableStateOf(UiState())
         private set
@@ -29,7 +28,7 @@ class HomeViewModel( private val scope: CoroutineScope) {
     //      private set
 
    private fun loadNotes() {
-        scope.launch {
+        screenModelScope.launch {
             state = UiState(loading = true)
             val response = NotesRepository.getAllNotes()
             state = UiState(notes = response, loading = false)

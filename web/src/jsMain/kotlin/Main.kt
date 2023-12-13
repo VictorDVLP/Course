@@ -13,7 +13,7 @@ private fun composeSample() {
     document.getElementById("root") ?: return
     renderComposable(rootElementId = "root") {
         Style(AppStyleSheet)
-        AppWeb()
+        App()
     }
 }
 
